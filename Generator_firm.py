@@ -1,0 +1,185 @@
+﻿import streamlit as st
+import random
+
+# Ustawienia strony
+st.set_page_config(page_title="Generator Nazw PRO")
+
+st.title("Generator Firm")
+
+# Baza kolorów
+KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
+
+# Baza fontów
+FONTY = [
+    "'Arial Black', san-serif", 
+    "'Courier New', monospace", 
+    "'Georgia', serif", 
+    "'Impact', sans-serif", 
+    "'Trebuchet MS', sans-serif",
+    "'Playfair Display', serif",
+    "'Verdana', sans-serif",
+    "'Times New Roman', serif",
+    "'Comic Sans MS', cursive"
+]
+
+# 1. INPUTY
+imie = st.text_input("Wpisz swoje imię lub nazwisko:")
+baza = st.text_input("Twoja branża lub słowo kluczowe:", placeholder="np. Transport, Meble, IT")
+
+st.markdown("---")
+
+# kontrast
+def get_text_color(bg_hex):
+    if bg_hex.lower() in ["#ffcb3c", "#ffffff"]: 
+        return "#000000"
+    return "#FFFFFF"
+
+# Inicjalizacja stanu
+if 'czesc1' not in st.session_state:
+    st.session_state.czesc1 = "TWOJA "
+    st.session_state.czesc2 = "FIRMA"
+    st.session_state.sep = ""
+    st.session_state.kolor1 = "#7d7d7d"
+    st.session_state.kolor2 = "#7d7d7d"
+    st.session_state.f1 = FONTY[0]
+    st.session_state.f2 = FONTY[0]
+    st.session_state.s1= 55
+    st.session_state.s2= 55
+    st.session_state.box1 = False
+    st.session_state.box2 = False
+    st.session_state.line = False
+    st.session_state.outline = False
+    st.session_state.kolor_outline1 = "#7d7d7d"
+    st.session_state.kolor_outline2 = "#7d7d7d"
+
+# 2. LOGIKA GENEROWANIA
+def generuj():
+    if len(imie) >= 3 and len(baza) >= 3:
+        dl_i, dl_b = random.choice([3, 4]), random.choice([3, 5])
+        c_i, c_b = imie[:dl_i].upper(), baza[:dl_b].upper()
+        
+        opt = ["IMIE", "BAZA", "POL", "MAX"]
+        sel = random.choice(opt)
+        
+        if sel == "IMIE": p, k = c_i, random.choice(["POL", c_b, "MAX", "EX"])
+        elif sel == "BAZA": p, k = c_b, random.choice(["POL", "EX", "MAX", c_i])
+        elif sel == "MAX": p, k = "MAX", random.choice([c_i, c_b])
+        else: p, k = "POL", random.choice([c_i, c_b])
+
+        st.session_state.czesc1 = p
+        st.session_state.czesc2 = k
+        st.session_state.sep = random.choices(["-", ""], weights=[20, 80])[0]
+        st.session_state.kolor1 = random.choice(KOLORY)
+        st.session_state.kolor2 = random.choice(KOLORY)
+        st.session_state.f1 = random.choice(FONTY)
+        st.session_state.f2 = random.choice(FONTY)
+        
+        # boxy
+        if st.session_state.sep == "-":
+            st.session_state.box1 = False
+            st.session_state.box2 = False
+        else:
+            st.session_state.box1 = random.random() < 0.40
+            st.session_state.box2 = random.random() < 0.40
+
+        #font
+        st.session_state.s1 = random.randint(45, 60)
+        st.session_state.s2 = random.randint(45, 60)
+
+        #linia
+        if st.session_state.box1 == False and st.session_state.box2 == False:
+            st.session_state.line = random.random() < 0.50
+        else: st.session_state.line = False
+
+        # --- Sekcja Outline ---
+        st.session_state.outline = random.random() < 0.30
+        
+        if st.session_state.outline:
+            # Kolor 1: losujemy, dopóki jest taki sam jak kolor tekstu
+            nowy_kolor1 = random.choice(KOLORY)
+            while nowy_kolor1 == st.session_state.kolor1:
+                nowy_kolor1 = random.choice(KOLORY)
+            st.session_state.kolor_outline1 = nowy_kolor1
+            
+            # Kolor 2: robimy to samo dla drugiej części
+            nowy_kolor2 = random.choice(KOLORY)
+            while nowy_kolor2 == st.session_state.kolor2:
+                nowy_kolor2 = random.choice(KOLORY)
+            st.session_state.kolor_outline2 = nowy_kolor2
+            
+        else:
+            # Jeśli outline się nie wylosował (else w linii z if)
+            st.session_state.kolor_outline1 = st.session_state.kolor1
+            st.session_state.kolor_outline2 = st.session_state.kolor2
+    else:
+        st.error("Wpisz przynajmniej 3 litery!")
+
+       
+
+ 
+# 3. HTML
+
+#kolor
+t1 = get_text_color(st.session_state.kolor1) if st.session_state.box1 else st.session_state.kolor1
+t2 = get_text_color(st.session_state.kolor2) if st.session_state.box2 else st.session_state.kolor2
+sep_color = st.session_state.kolor1 if not st.session_state.box1 else st.session_state.kolor2
+
+#outline 
+if st.session_state.outline:
+    s_out1 = (
+        f"text-shadow: -1.5px -1.5px 0 {st.session_state.kolor_outline1}, "
+        f"1.5px -1.5px 0 {st.session_state.kolor_outline1}, "
+        f"-1.5px 1.5px 0 {st.session_state.kolor_outline1}, "
+        f"1.5px 1.5px 0 {st.session_state.kolor_outline1};"
+    )
+else:
+    s_out1 = ""
+
+if st.session_state.outline:
+    s_out2 = (
+        f"text-shadow: -1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
+        f"1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
+        f"-1.5px 1.5px 0 {st.session_state.kolor_outline2}, "
+        f"1.5px 1.5px 0 {st.session_state.kolor_outline2};"
+    )
+else:
+    s_out2 = ""
+
+# box1 
+if st.session_state.box1:
+    html_p1 = f'<span style="background-color:{st.session_state.kolor1}; color:{t1}; padding:0.1em 0.3em; border-radius:0px; font-family:{st.session_state.f1}; font-size:{st.session_state.s1}px; display:inline-block; margin:0; white-space: pre-wrap; {s_out1}">{st.session_state.czesc1}</span>'
+else:
+    html_p1 = f'<span style="color:{t1}; font-family:{st.session_state.f1}; font-size:{st.session_state.s1}px; margin:0; white-space: pre-wrap; {s_out1}">{st.session_state.czesc1}</span>'
+
+# box2 
+if st.session_state.box2:
+    html_p2 = f'<span style="background-color:{st.session_state.kolor2}; color:{t2}; padding:0.1em 0.3em; border-radius:0px; font-family:{st.session_state.f2}; font-size:{st.session_state.s2}px; display:inline-block; margin:0; white-space: pre-wrap; {s_out2}">{st.session_state.czesc2}</span>'
+else:
+    html_p2 = f'<span style="color:{t2}; font-family:{st.session_state.f2}; font-size:{st.session_state.s2}px; margin:0; white-space: pre-wrap; {s_out2}">{st.session_state.czesc2}</span>'
+
+#linia
+html_line = ""
+if st.session_state.line:
+    html_line = f'<div style="height: 12px; background-color: {sep_color}; width: 100%; margin-top: 2px; border-radius: 0px;"></div>'
+
+
+
+# Final
+html_final = (
+    f'<div style="text-align: center;">'
+    f'<p style="font-size: 18px; color: grey; margin-bottom: 5px;">Twoja nowa marka:</p>'
+    f'<div style="display: inline-block; text-align: left;">'
+    f'<h1 style="letter-spacing: 0px; line-height: 1.4; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0;">'
+    f'{html_p1}<span style="font-size:{st.session_state.s1}px; color:{sep_color};">{st.session_state.sep}</span>{html_p2}'
+    f'</h1>{html_line}</div></div>'
+)
+
+st.markdown(html_final, unsafe_allow_html=True)
+
+
+
+# 4. PRZYCISK
+st.write("")
+col1, col2, col3 = st.columns([1, 1, 1])
+with col2:
+    st.button("Generuj nazwę ✨", on_click=generuj, use_container_width=True)
