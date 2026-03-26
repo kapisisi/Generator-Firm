@@ -106,7 +106,7 @@ def generuj():
 
         opt = ["IMIE", "BAZA", "POL", "MAX", "MEGA", "NAZWISKO" ]
         
-        wagi = [25, 25, 10, 10, 10, 20] if c_n else [30, 30, 20, 10, 10, 0]
+        wagi = [28, 20, 10, 10, 7, 25] if c_n else [30, 30, 20, 10, 10, 0]
         sel = random.choices(opt, weights=wagi, k=1)[0]
 
 
