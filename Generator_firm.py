@@ -8,12 +8,13 @@ import random
 st.set_page_config(page_title="Generator Nazw")
 
 st.markdown("<h1 style='text-align: center;'>Generator Firm</h1>", unsafe_allow_html=True)
+st.write("")
 
 # Baza kolorów
 KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
 
 #baza literek
-SAMO = ["a", "o", "e", "u", "i", "y", "ą", "ę"]
+SAMO = ["a", "o", "e", "u", "i", "y", ]
 SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", "s", "t", "w", "z", "ż" ]
 
 # Baza fontów
@@ -66,7 +67,7 @@ def generuj():
         c_i, c_b = imie[:dl_i].upper(), baza[:dl_b].upper()
         
         opt = ["IMIE", "BAZA", "POL", "MAX", "MEGA"]
-        sel = random.choice(opt)
+        sel = random.choices(opt, weights=[30, 30, 15, 30, 5], k=1)[0]
         
         if sel == "IMIE": p, k = c_i, random.choice(["POL", c_b, "MAX", "EX"])
         elif sel == "BAZA": p, k = c_b, random.choice(["POL", "EX", "MAX", c_i])  
