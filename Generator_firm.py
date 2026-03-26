@@ -220,10 +220,16 @@ if st.session_state.line:
 
 # Final
 html_final = (
-    f'<div style="text-align: center; padding: 40px 0px;">'  # <--- TUTAJ DODANE PADDING
-
+    f'<div style="'
+    f'background-color: white; '      # Białe tło prostokąta
+    f'padding: 20px 20px; '           # Marginesy wewnętrzne (góra/dół, boki)
+ 
+    f'text-align: center; '
+    f'margin: 10px auto 25px auto; '  # Odstępy od innych elementów
+    f'max-width: 90%;">'              # Szerokość na telefonie
+ 
     f'<div style="display: inline-block; text-align: left;">'
-    f'<h1 style="letter-spacing: 0px; line-height: 1.4; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0;">'
+    f'<h1 style="line-height: 1.2; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0;">'
     f'{html_p1}<span style="font-size:{st.session_state.s1}px; color:{sep_color};">{st.session_state.sep}</span>{html_p2}'
     f'</h1>{html_line}</div></div>'
 )
