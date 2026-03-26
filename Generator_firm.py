@@ -5,7 +5,21 @@ import random
 # BIBLIOTEKA
 
 # Ustawienia strony
+
 st.set_page_config(page_title="Generator Nazw")
+
+st.markdown("""
+    <style>
+    /* wszytsko */
+    div.stVerticalBlock { gap: 10px !important; }
+    
+    /* marginesy linii --- */
+    hr { margin: 5px 5px !important; }
+    
+    /*nagłówki paragrafy */
+    h1, p { margin: 5px !important; padding: 0px !important; }
+    </style>
+""", unsafe_allow_html=True)
 
 st.markdown("<h1 style='text-align: center;'>Generator Firm</h1>", unsafe_allow_html=True)
 st.write("")
@@ -14,7 +28,7 @@ st.write("")
 KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
 
 #baza literek
-SAMO = ["a", "o", "e", "u", "i", "y", ]
+SAMO = ["a", "o", "e", "u", "i", "y", "ą", "ę"]
 SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", "s", "t", "w", "z", "ż" ]
 
 # Baza fontów
@@ -186,9 +200,9 @@ if st.session_state.line:
 # Final
 html_final = (
     f'<div style="text-align: center;">'
-    f'<p style="font-size: 18px; color: grey; margin-bottom: 5px;">Twoja nowa marka:</p>'
+
     f'<div style="display: inline-block; text-align: left;">'
-    f'<h1 style="letter-spacing: 0px; line-height: 1.4; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0;">'
+    f'<h1 style="letter-spacing: 0px; line-height: 1.1; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0;">'
     f'{html_p1}<span style="font-size:{st.session_state.s1}px; color:{sep_color};">{st.session_state.sep}</span>{html_p2}'
     f'</h1>{html_line}</div></div>'
 )
@@ -227,4 +241,4 @@ with d_col2:
     st.caption("<p style='text-align:center;'>Podoba Ci się generator? Wesprzyj moją pracę!</p>", unsafe_allow_html=True)
 
 # Informacja o danych na samym końcu strony
-st.markdown("<p style='text-align:center; font-size:10px; color: grey; margin-top: 50px;'>Szanuję Twoją prywatność. Generator nie przechowuje ani nie przesyła wpisywanych przez Ciebie danych.</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; font-size:10px; color: grey; margin-top: 20px;'>Szanuję Twoją prywatność. Generator nie przechowuje ani nie przesyła wpisywanych przez Ciebie danych.</p>", unsafe_allow_html=True)
