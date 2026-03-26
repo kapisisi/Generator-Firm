@@ -25,23 +25,38 @@ st.markdown("<h1 style='text-align: center;'>Generator Firm</h1>", unsafe_allow_
 st.write("")
 
 # Baza kolorów
-KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
+KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c", "#046e64", "#ff3333" ]
 
 #baza literek
 SAMO = ["a", "o", "e", "u", "i", "y", ]
 SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", "s", "t", "w", "z", "ż" ]
 
 # Baza fontów
+st.markdown("""
+<style>
+/* 1. Import z Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,700;1,700&family=Montserrat:ital,wght@0,700;1,700&family=Archivo+Black&display=swap');
+
+/* 2. Import Papyrusa */
+@font-face {
+    font-family: 'Papyrus-Clone';
+    src: url('https://fonts.cdnfonts.com/s/1647/PAPYRUS.woff');
+} /* <-- ta klamra była zgubiona */
+
+</style>
+""", unsafe_allow_html=True)
 
 
 FONTY = [
     "'Arial Black', san-serif",
     "'Courier New', monospace", 
-    "'Oswald', sans-serif",
     "'Impact', sans-serif", 
     "'Trebuchet MS', sans-serif",
     "'Verdana', sans-serif",
-    "'Comic Sans MS', cursive"
+    "'Georgia', serif",
+    "'Montserrat', sans-serif"
+    "'Papyrus-Clone', serif",
+    "'Comic Neue', cursive",
 ]
 
 # 1. INPUTY
@@ -162,23 +177,28 @@ t1 = get_text_color(st.session_state.kolor1) if st.session_state.box1 else st.se
 t2 = get_text_color(st.session_state.kolor2) if st.session_state.box2 else st.session_state.kolor2
 sep_color = st.session_state.kolor1 if not st.session_state.box1 else st.session_state.kolor2
 
-#outline 
+#obrys
 if st.session_state.outline:
-    s_out1 = (
+    s_out1_raw = (
         f"text-shadow: -1.5px -1.5px 0 {st.session_state.kolor_outline1}, "
         f"1.5px -1.5px 0 {st.session_state.kolor_outline1}, "
         f"-1.5px 1.5px 0 {st.session_state.kolor_outline1}, "
         f"1.5px 1.5px 0 {st.session_state.kolor_outline1};"
     )
-    s_out2 = (
+    s_out2_raw = (
         f"text-shadow: -1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
         f"1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
         f"-1.5px 1.5px 0 {st.session_state.kolor_outline2}, "
         f"1.5px 1.5px 0 {st.session_state.kolor_outline2};"
     )
 else:
-    s_out1 = ""
-    s_out2 = ""
+    s_out1_raw = ""
+    s_out2_raw = ""
+
+
+s_out1 = "" if st.session_state.box1 else s_out1_raw
+s_out2 = "" if st.session_state.box2 else s_out2_raw
+
 
 # box1 
 if st.session_state.box1:
