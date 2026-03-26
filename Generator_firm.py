@@ -60,8 +60,11 @@ FONTY = [
 ]
 
 # 1. INPUTY
-imie = st.text_input("Wpisz swoje imię, pseudonim lub nazwisko:")
 baza = st.text_input("Twoja branża lub słowo kluczowe:", placeholder="np. Transport, Meble, IT")
+imie = st.text_input("Wpisz swoje imię lub pseudonim:")
+nazwisko = st.text_input("Wpisz swoje nazwisko - opcjonalnie:", placeholder="opcjonalnie")
+
+
 
 st.markdown("---")
 
@@ -91,18 +94,31 @@ if 'czesc1' not in st.session_state:
 
 # 2. LOGIKA GENEROWANIA
 def generuj():
-    if len(imie) >= 3 and len(baza) >= 3:
-        dl_i, dl_b = random.choice([3, 4]), random.choice([3, 5])
+    if len(imie) >= 2 and len(baza) >= 2:
+        c_n = ""
+        dl_i = random.choices([3, 4], weights=[60, 40])[0]
+        dl_b = random.choices([3, 4], weights=[60, 40])[0]
         c_i, c_b = imie[:dl_i].upper(), baza[:dl_b].upper()
+
+        if len(nazwisko) > 2:
+            dl_n = random.choices([3, 4], weights=[60, 40])[0]
+            c_n = nazwisko[:dl_n].upper()
+
+        opt = ["IMIE", "BAZA", "POL", "MAX", "MEGA", "NAZWISKO" ]
         
-        opt = ["IMIE", "BAZA", "POL", "MAX", "MEGA"]
-        sel = random.choices(opt, weights=[33, 32, 20, 20, 5], k=1)[0]
+        wagi = [25, 25, 10, 10, 10, 20] if c_n else [30, 30, 20, 10, 10, 0]
+        sel = random.choices(opt, weights=wagi, k=1)[0]
+
+
         
-        if sel == "IMIE": p, k = c_i, random.choice(["POL", c_b, "MAX", "EX"])
-        elif sel == "BAZA": p, k = c_b, random.choice(["POL", "EX", "MAX", c_i])  
-        elif sel == "MEGA": p, k = "MEGA", random.choice(["POL", c_b, "MAX", c_i])
-        elif sel == "MAX": p, k = "MAX", random.choice([c_i, c_b])
-        else: p, k = "POL", random.choice([c_i, c_b])
+        if sel == "IMIE": p, k = c_i, random.choice(["POL", c_b, "MAX", "EX"] + ([c_n] if c_n else []))
+        elif sel == "NAZWISKO":
+            p = c_n
+            k = random.choice([c_i, c_b, "POL", "MAX", "EX"])
+        elif sel == "BAZA": p, k = c_b, random.choice(["POL", "EX", "MAX", c_i] + ([c_n] if c_n else []))
+        elif sel == "MEGA": p, k = "MEGA", random.choice(["POL", c_b, "MAX", c_i] + ([c_n] if c_n else []))
+        elif sel == "MAX": p, k = "MAX", random.choice([c_i, c_b] + ([c_n] if c_n else []))
+        else: p, k = "POL", random.choice([c_i, c_b] + ([c_n] if c_n else []))
 
         st.session_state.czesc1 = p
         st.session_state.czesc2 = k
@@ -239,6 +255,7 @@ st.markdown(html_final, unsafe_allow_html=True)
 # 4. PRZYCISK
 st.markdown("""
     <style>
+
     /* Styl */
     div.stButton > button {
         background-color: #ffda48 !important; /* Jasny żółty */
