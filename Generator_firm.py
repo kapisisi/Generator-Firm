@@ -5,15 +5,15 @@ import random
 # BIBLIOTEKA
 
 # Ustawienia strony
-st.set_page_config(page_title="Generator Nazw PRO")
+st.set_page_config(page_title="Generator Nazw")
 
-st.title("Generator Firm")
+st.markdown("<h1 style='text-align: center;'>Generator Firm</h1>", unsafe_allow_html=True)
 
 # Baza kolorów
 KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
 
 #baza literek
-SAMO = ["a", "o", "e", "u", "i", "y", "ą", "ę"]
+SAMO = ["a", "o", "e", "u", "i", "y", ]
 SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", "s", "t", "w", "z", "ż" ]
 
 # Baza fontów
@@ -23,7 +23,6 @@ FONTY = [
     "'Georgia', serif", 
     "'Impact', sans-serif", 
     "'Trebuchet MS', sans-serif",
-    "'Playfair Display', serif",
     "'Verdana', sans-serif",
     "'Times New Roman', serif",
     "'Comic Sans MS', cursive"
@@ -155,10 +154,6 @@ if st.session_state.outline:
         f"-1.5px 1.5px 0 {st.session_state.kolor_outline1}, "
         f"1.5px 1.5px 0 {st.session_state.kolor_outline1};"
     )
-else:
-    s_out1 = ""
-
-if st.session_state.outline:
     s_out2 = (
         f"text-shadow: -1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
         f"1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
@@ -166,6 +161,7 @@ if st.session_state.outline:
         f"1.5px 1.5px 0 {st.session_state.kolor_outline2};"
     )
 else:
+    s_out1 = ""
     s_out2 = ""
 
 # box1 
@@ -185,8 +181,6 @@ html_line = ""
 if st.session_state.line:
     html_line = f'<div style="height: 12px; background-color: {sep_color}; width: 100%; margin-top: 2px; border-radius: 0px;"></div>'
 
-
-
 # Final
 html_final = (
     f'<div style="text-align: center;">'
@@ -199,40 +193,36 @@ html_final = (
 
 st.markdown(html_final, unsafe_allow_html=True)
 
-
-
 # 4. PRZYCISK
 st.write("")
 col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
-
-#przycisk donate
-
     st.button("Generuj nazwę ✨", on_click=generuj, use_container_width=True)
 
+# stopka
 
-st.write("")
-st.write("")
-st.write("")
 st.markdown("---") 
+
+# Informacja o danych
+st.markdown("<p style='text-align:center; font-size:10px; color: grey;'>Szanuję Twoją prywatność. Generator nie przechowuje ani nie przesyła wpisywanych przez Ciebie danych.</p>", unsafe_allow_html=True)
+
 st.markdown("""
     <style>
     div.stLinkButton > a {
-        background-color: #FF813F !important; /* Kolor tła (pomarańczowy Buy Me a Coffee) */
-        color: white !important;              /* Kolor tekstu */
-        border-radius: 10px !important;       /* Zaokrąglenie rogów */
+        background-color: #FF813F !important;
+        color: white !important;
+        border-radius: 10px !important;
         border: none !important;
         font-weight: bold !important;
     }
     div.stLinkButton > a:hover {
-        background-color: #FF9B65 !important; /* Kolor po najechaniu myszką */
+        background-color: #FF9B65 !important;
         color: white !important;
     }
     </style>
 """, unsafe_allow_html=True)
-d_col1, d_col2, d_col3 = st.columns([1, 1, 1])
 
+d_col1, d_col2, d_col3 = st.columns([1, 1, 1])
 with d_col2:
-  
     st.link_button("☕ DONATE", "https://www.buymeacoffee.com/KasiaWorek", use_container_width=True)
     st.caption("<p style='text-align:center;'>Podoba Ci się generator? Wesprzyj moją pracę!</p>", unsafe_allow_html=True)
