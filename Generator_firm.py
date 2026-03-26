@@ -37,7 +37,7 @@ SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", 
 FONTY = [
     "'Arial Black', san-serif",
     "'Courier New', monospace", 
-    "'Georgia', serif", 
+    "'Oswald', sans-serif",
     "'Impact', sans-serif", 
     "'Trebuchet MS', sans-serif",
     "'Verdana', sans-serif",
@@ -81,7 +81,7 @@ def generuj():
         c_i, c_b = imie[:dl_i].upper(), baza[:dl_b].upper()
         
         opt = ["IMIE", "BAZA", "POL", "MAX", "MEGA"]
-        sel = random.choices(opt, weights=[30, 30, 15, 30, 5], k=1)[0]
+        sel = random.choices(opt, weights=[33, 32, 20, 20, 5], k=1)[0]
         
         if sel == "IMIE": p, k = c_i, random.choice(["POL", c_b, "MAX", "EX"])
         elif sel == "BAZA": p, k = c_b, random.choice(["POL", "EX", "MAX", c_i])  
