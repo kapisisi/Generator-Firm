@@ -178,27 +178,28 @@ t2 = get_text_color(st.session_state.kolor2) if st.session_state.box2 else st.se
 sep_color = st.session_state.kolor1 if not st.session_state.box1 else st.session_state.kolor2
 
 #obrys
+
+
 if st.session_state.outline:
-    s_out1_raw = (
-        f"text-shadow: -1.5px -1.5px 0 {st.session_state.kolor_outline1}, "
-        f"1.5px -1.5px 0 {st.session_state.kolor_outline1}, "
-        f"-1.5px 1.5px 0 {st.session_state.kolor_outline1}, "
-        f"1.5px 1.5px 0 {st.session_state.kolor_outline1};"
+    c1 = st.session_state.kolor_outline1
+    c2 = st.session_state.kolor_outline2
+    
+    # Dla pierwszej części
+    s_out1 = (
+        f"text-shadow: "
+        f"-1.5px -1.5px 0 {c1}, 1.5px -1.5px 0 {c1}, -1.5px 1.5px 0 {c1}, 1.5px 1.5px 0 {c1}, " 
+        f"0px -1.8px 0 {c1}, 0px 1.8px 0 {c1}, -1.8px 0px 0 {c1}, 1.8px 0px 0 {c1};"        
     )
-    s_out2_raw = (
-        f"text-shadow: -1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
-        f"1.5px -1.5px 0 {st.session_state.kolor_outline2}, "
-        f"-1.5px 1.5px 0 {st.session_state.kolor_outline2}, "
-        f"1.5px 1.5px 0 {st.session_state.kolor_outline2};"
+    
+    # Dla drugiej części 
+    s_out2 = (
+        f"text-shadow: "
+        f"-1.5px -1.5px 0 {c2}, 1.5px -1.5px 0 {c2}, -1.5px 1.5px 0 {c2}, 1.5px 1.5px 0 {c2}, " 
+        f"0px -1.8px 0 {c2}, 0px 1.8px 0 {c2}, -1.8px 0px 0 {c2}, 1.8px 0px 0 {c2};"        
     )
 else:
-    s_out1_raw = ""
-    s_out2_raw = ""
-
-
-s_out1 = "" if st.session_state.box1 else s_out1_raw
-s_out2 = "" if st.session_state.box2 else s_out2_raw
-
+    s_out1 = ""
+    s_out2 = ""
 
 # box1 
 if st.session_state.box1:
