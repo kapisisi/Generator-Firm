@@ -28,19 +28,20 @@ st.write("")
 KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
 
 #baza literek
-SAMO = ["a", "o", "e", "u", "i", "y", "ą", "ę"]
+SAMO = ["a", "o", "e", "u", "i", "y", ]
 SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", "s", "t", "w", "z", "ż" ]
 
 # Baza fontów
+
+
 FONTY = [
-    "'Arial Black', san-serif", 
+    "'Arial Black', san-serif",
+    "'Brush Script MT', sans-serif"
     "'Courier New', monospace", 
     "'Georgia', serif", 
     "'Impact', sans-serif", 
     "'Trebuchet MS', sans-serif",
-
     "'Verdana', sans-serif",
-    "'Times New Roman', serif",
     "'Comic Sans MS', cursive"
 ]
 
