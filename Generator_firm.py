@@ -36,7 +36,6 @@ SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", 
 
 FONTY = [
     "'Arial Black', san-serif",
-    "'Brush Script MT', sans-serif"
     "'Courier New', monospace", 
     "'Georgia', serif", 
     "'Impact', sans-serif", 
