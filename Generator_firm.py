@@ -13,7 +13,7 @@ st.markdown("<h1 style='text-align: center;'>Generator Firm</h1>", unsafe_allow_
 KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
 
 #baza literek
-SAMO = ["a", "o", "e", "u", "i", "y", ]
+SAMO = ["a", "o", "e", "u", "i", "y", "ą", "ę"]
 SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", "s", "t", "w", "z", "ż" ]
 
 # Baza fontów
@@ -23,6 +23,7 @@ FONTY = [
     "'Georgia', serif", 
     "'Impact', sans-serif", 
     "'Trebuchet MS', sans-serif",
+
     "'Verdana', sans-serif",
     "'Times New Roman', serif",
     "'Comic Sans MS', cursive"
@@ -199,13 +200,10 @@ col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
     st.button("Generuj nazwę ✨", on_click=generuj, use_container_width=True)
 
-# stopka
-
+# --- STOPKA ---
 st.markdown("---") 
 
-# Informacja o danych
-st.markdown("<p style='text-align:center; font-size:10px; color: grey;'>Szanuję Twoją prywatność. Generator nie przechowuje ani nie przesyła wpisywanych przez Ciebie danych.</p>", unsafe_allow_html=True)
-
+# Style dla przycisku Donate
 st.markdown("""
     <style>
     div.stLinkButton > a {
@@ -226,3 +224,6 @@ d_col1, d_col2, d_col3 = st.columns([1, 1, 1])
 with d_col2:
     st.link_button("☕ DONATE", "https://www.buymeacoffee.com/KasiaWorek", use_container_width=True)
     st.caption("<p style='text-align:center;'>Podoba Ci się generator? Wesprzyj moją pracę!</p>", unsafe_allow_html=True)
+
+# Informacja o danych na samym końcu strony
+st.markdown("<p style='text-align:center; font-size:10px; color: grey; margin-top: 50px;'>Szanuję Twoją prywatność. Generator nie przechowuje ani nie przesyła wpisywanych przez Ciebie danych.</p>", unsafe_allow_html=True)
