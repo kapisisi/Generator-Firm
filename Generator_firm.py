@@ -1,6 +1,9 @@
 ﻿import streamlit as st
 import random
 
+
+# BIBLIOTEKA
+
 # Ustawienia strony
 st.set_page_config(page_title="Generator Nazw PRO")
 
@@ -8,6 +11,10 @@ st.title("Generator Firm")
 
 # Baza kolorów
 KOLORY = ["#bd3826", "#1e1a18", "#5aa350", "#cc8135", "#3c6498", "#ffcb3c", "#7d7d7d", "#233b7c"]
+
+#baza literek
+SAMO = ["a", "o", "e", "u", "i", "y", "ą", "ę"]
+SPOL = ["ź", "b", 'c', "d", "f", "g", "h", "j", "k", "ł", "m", "n", "p", "R", "s", "t", "w", "z", "ż" ]
 
 # Baza fontów
 FONTY = [
@@ -23,7 +30,7 @@ FONTY = [
 ]
 
 # 1. INPUTY
-imie = st.text_input("Wpisz swoje imię lub nazwisko:")
+imie = st.text_input("Wpisz swoje imię, pseudonim lub nazwisko:")
 baza = st.text_input("Twoja branża lub słowo kluczowe:", placeholder="np. Transport, Meble, IT")
 
 st.markdown("---")
@@ -43,8 +50,8 @@ if 'czesc1' not in st.session_state:
     st.session_state.kolor2 = "#7d7d7d"
     st.session_state.f1 = FONTY[0]
     st.session_state.f2 = FONTY[0]
-    st.session_state.s1= 55
-    st.session_state.s2= 55
+    st.session_state.s1= 32
+    st.session_state.s2= 32
     st.session_state.box1 = False
     st.session_state.box2 = False
     st.session_state.line = False
@@ -58,22 +65,38 @@ def generuj():
         dl_i, dl_b = random.choice([3, 4]), random.choice([3, 5])
         c_i, c_b = imie[:dl_i].upper(), baza[:dl_b].upper()
         
-        opt = ["IMIE", "BAZA", "POL", "MAX"]
+        opt = ["IMIE", "BAZA", "POL", "MAX", "MEGA"]
         sel = random.choice(opt)
         
         if sel == "IMIE": p, k = c_i, random.choice(["POL", c_b, "MAX", "EX"])
-        elif sel == "BAZA": p, k = c_b, random.choice(["POL", "EX", "MAX", c_i])
+        elif sel == "BAZA": p, k = c_b, random.choice(["POL", "EX", "MAX", c_i])  
+        elif sel == "MEGA": p, k = "MEGA", random.choice(["POL", c_b, "MAX", c_i])
         elif sel == "MAX": p, k = "MAX", random.choice([c_i, c_b])
         else: p, k = "POL", random.choice([c_i, c_b])
 
         st.session_state.czesc1 = p
         st.session_state.czesc2 = k
+
+        #myslnik
         st.session_state.sep = random.choices(["-", ""], weights=[20, 80])[0]
+        
+        #dodawanie samiogloski
+        if st.session_state.sep == "":
+            ostatnia_litera = st.session_state.czesc1[-1].lower()
+         
+            if ostatnia_litera in [s.lower() for s in SPOL]:
+             
+                if random.random() < 0.25:
+                    lacznik = random.choice(SAMO).upper()
+                    st.session_state.czesc1 += lacznik
+
+        #kolory i fonty 
         st.session_state.kolor1 = random.choice(KOLORY)
         st.session_state.kolor2 = random.choice(KOLORY)
         st.session_state.f1 = random.choice(FONTY)
         st.session_state.f2 = random.choice(FONTY)
-        
+
+
         # boxy
         if st.session_state.sep == "-":
             st.session_state.box1 = False
@@ -82,33 +105,33 @@ def generuj():
             st.session_state.box1 = random.random() < 0.40
             st.session_state.box2 = random.random() < 0.40
 
-        #font
-        st.session_state.s1 = random.randint(45, 60)
-        st.session_state.s2 = random.randint(45, 60)
+        #font wielkosc
+        st.session_state.s1 = random.randint(35, 50)
+        st.session_state.s2 = random.randint(35, 50)
 
         #linia
         if st.session_state.box1 == False and st.session_state.box2 == False:
             st.session_state.line = random.random() < 0.50
         else: st.session_state.line = False
 
-        # --- Sekcja Outline ---
+        #Outline
         st.session_state.outline = random.random() < 0.30
         
         if st.session_state.outline:
-            # Kolor 1: losujemy, dopóki jest taki sam jak kolor tekstu
+            # Kolor 1:
             nowy_kolor1 = random.choice(KOLORY)
             while nowy_kolor1 == st.session_state.kolor1:
                 nowy_kolor1 = random.choice(KOLORY)
             st.session_state.kolor_outline1 = nowy_kolor1
             
-            # Kolor 2: robimy to samo dla drugiej części
+            # Kolor 2 
             nowy_kolor2 = random.choice(KOLORY)
             while nowy_kolor2 == st.session_state.kolor2:
                 nowy_kolor2 = random.choice(KOLORY)
             st.session_state.kolor_outline2 = nowy_kolor2
             
         else:
-            # Jeśli outline się nie wylosował (else w linii z if)
+            # Jeśli outline się nie wylosował 
             st.session_state.kolor_outline1 = st.session_state.kolor1
             st.session_state.kolor_outline2 = st.session_state.kolor2
     else:
@@ -182,4 +205,34 @@ st.markdown(html_final, unsafe_allow_html=True)
 st.write("")
 col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
+
+#przycisk donate
+
     st.button("Generuj nazwę ✨", on_click=generuj, use_container_width=True)
+
+
+st.write("")
+st.write("")
+st.write("")
+st.markdown("---") 
+st.markdown("""
+    <style>
+    div.stLinkButton > a {
+        background-color: #FF813F !important; /* Kolor tła (pomarańczowy Buy Me a Coffee) */
+        color: white !important;              /* Kolor tekstu */
+        border-radius: 10px !important;       /* Zaokrąglenie rogów */
+        border: none !important;
+        font-weight: bold !important;
+    }
+    div.stLinkButton > a:hover {
+        background-color: #FF9B65 !important; /* Kolor po najechaniu myszką */
+        color: white !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+d_col1, d_col2, d_col3 = st.columns([1, 1, 1])
+
+with d_col2:
+  
+    st.link_button("☕ DONATE", "https://www.buymeacoffee.com/KasiaWorek", use_container_width=True)
+    st.caption("<p style='text-align:center;'>Podoba Ci się generator? Wesprzyj moją pracę!</p>", unsafe_allow_html=True)
