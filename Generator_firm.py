@@ -199,10 +199,10 @@ if st.session_state.line:
 
 # Final
 html_final = (
-    f'<div style="text-align: center;">'
+    f'<div style="text-align: center; padding: 40px 0px;">'  # <--- TUTAJ DODANE PADDING
 
     f'<div style="display: inline-block; text-align: left;">'
-    f'<h1 style="letter-spacing: 0px; line-height: 1.1; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0;">'
+    f'<h1 style="letter-spacing: 0px; line-height: 1.4; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0;">'
     f'{html_p1}<span style="font-size:{st.session_state.s1}px; color:{sep_color};">{st.session_state.sep}</span>{html_p2}'
     f'</h1>{html_line}</div></div>'
 )
@@ -210,7 +210,32 @@ html_final = (
 st.markdown(html_final, unsafe_allow_html=True)
 
 # 4. PRZYCISK
-st.write("")
+st.markdown("""
+    <style>
+    /* Styl */
+    div.stButton > button {
+        background-color: #ffda48 !important; /* Jasny żółty */
+        color: #000000 !important;           /* Czarny tekst dla kontrastu */
+        border-radius: 10px !important;      /* Zaokrąglone rogi */
+        border: 1px solid #fbc02d !important; /* Delikatna obwódka */
+        height: 3em !important;
+        font-weight: bold !important;
+    }
+    
+    /* hover */
+    div.stButton > button:hover {
+        background-color: #ffcc00 !important; /* Jeszcze jaśniejszy żółty */
+        color: #000000 !important;
+        border-color: #fbc02d !important;
+    }
+    
+    /* Efekt po kliknięciu */
+    div.stButton > button:active {
+        background-color: #fdd835 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
     st.button("Generuj nazwę ✨", on_click=generuj, use_container_width=True)
@@ -229,7 +254,7 @@ st.markdown("""
         font-weight: bold !important;
     }
     div.stLinkButton > a:hover {
-        background-color: #FF9B65 !important;
+        background-color: #ff5f08 !important;
         color: white !important;
     }
     </style>
